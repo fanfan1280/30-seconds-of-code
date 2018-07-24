@@ -24,6 +24,7 @@
   "module": "dist/_30s.esm.js",
   "scripts": {
     "builder": "node ./scripts/build.js",
+    "build_zh": "node ./scripts/build_zh.js",
     "linter": "node ./scripts/lint.js",
     "tagger": "node ./scripts/tag.js",
     "webber": "node ./scripts/web.js",
