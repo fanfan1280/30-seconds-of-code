@@ -5,6 +5,9 @@ Returns `true` if the provided predicate function returns `true` for at least on
 Use `Array.some()` to test if any elements in the collection return `true` based on `fn`.
 Omit the second argument, `fn`, to use `Boolean` as a default.
 
+1. 利用 `Array.some()`
+2. 指定默认断言函数 `Boolean`
+
 ```js
 const any = (arr, fn = Boolean) => arr.some(fn);
 ```
