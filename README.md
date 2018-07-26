@@ -815,13 +815,8 @@ Returns `true` if the provided predicate function returns `true` for all element
 Use `Array.every()` to test if all elements in the collection return `true` based on `fn`.
 Omit the second argument, `fn`, to use `Boolean` as a default.
 
-1. 利用 `Array.every()`
-2. 指定默认断言函数 `Boolean`
-
 ```js
 const all = (arr, fn = Boolean) => arr.every(fn);
-// 私改版，数组为空返回 false
-const all = (arr, fn = Boolean) => !!arr.length && arr.every(fn)
 ```
 
 <details>
@@ -830,9 +825,22 @@ const all = (arr, fn = Boolean) => !!arr.length && arr.every(fn)
 ```js
 all([4, 2, 3], x => x > 1); // true
 all([1, 2, 3]); // true
+all([])  // true
 ```
 
+
 </details>
+解析：
+
+1. 利用 `Array.every()`
+2. 指定默认断言函数 `Boolean`
+
+```js
+// 私改，数组为空返回 false
+const all = (arr, fn = Boolean) => !!arr.length && arr.every(fn)
+
+all([])  // false
+```
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -856,7 +864,12 @@ any([0, 1, 2, 0], x => x >= 2); // true
 any([0, 0, 1, 0]); // true
 ```
 
+
 </details>
+解析：
+
+1. 利用 `Array.some()`
+2. 指定默认断言函数 `Boolean`
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -882,7 +895,17 @@ arrayToCSV([['a', 'b'], ['c', 'd']]); // '"a","b"\n"c","d"'
 arrayToCSV([['a', 'b'], ['c', 'd']], ';'); // '"a";"b"\n"c";"d"'
 ```
 
+
 </details>
+解析：
+
+1. [CSV是什么？](https://zh.wikipedia.org/wiki/%E9%80%97%E5%8F%B7%E5%88%86%E9%9A%94%E5%80%BC)
+  - 纯文本
+  - 一行就是一条记录。所以需要分隔符 `\n`
+  - 每条记录被分隔符分割
+
+2. 利用 `map()` 将二维数组中的元素（数组）转成字符串，得到新数组
+3. 利用 `join()` 将新数组拼接成字符串
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -3128,8 +3151,34 @@ const arrayToHtmlList = (arr, listID) =>
 arrayToHtmlList(['item 1', 'item 2'], 'myListID');
 ```
 
-</details>
 
+</details>
+解析：
+
+1. `arrayToHtmlList()` 执行之后返回父元素最终的 `innerHTML`
+2. 利用[逗号运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Comma_Operator)对父元素 `el` 操作 `innerHTML` 并返回此 `innerHTML`，又因为逗号运算符只支持表达式，所以利用匿名函数变相声明 `el`
+
+```javascript
+// 普通版
+const arrayToHtmlList = (arr, listID) => {
+  let el = document.querySelector('#' + listID)),
+      html
+  html = el.innerHTML + arr.map(item => `<li>${item}</li>`).join('')
+  el.innerHTML = html
+  return html
+}
+
+// 私改
+const arrayToHtmlList = (arr, selector) =>
+  (el => (
+    (el = document.querySelector(selector)),
+    (el.innerHTML += arr.map(item => `<li>${item}</li>`).join(''))
+  ))();
+```
+
+从普通版可以看出来，写法上确实精简了很多。
+
+**私改**：既然是利用 `querySelector()` 那就直接传个选择符就好了 =。=
 <br>[⬆ Back to top](#table-of-contents)
 
 
@@ -5046,8 +5095,21 @@ const approximatelyEqual = (v1, v2, epsilon = 0.001) => Math.abs(v1 - v2) < epsi
 approximatelyEqual(Math.PI / 2.0, 1.5708); // true
 ```
 
-</details>
 
+</details>
+解析：
+
+1. 利用一个误差值判断约等
+2. `.1 + .2 = .3` 问题
+  - 判断数字相等，一般解决 `.1+.2=.3` 的问题
+  - 利用一个最小误差值进行判断。JS 中一般取 `2^52`，即 `Number.EPSILON`
+
+```js
+// 引申
+const numbersCloseEnoughToEqual = (v1, v2) => Math.abs(v1 - v2) < Number.EPSILON
+
+numbersCloseEnoughToEqual(.1+.2, .3)  // true
+```
 <br>[⬆ Back to top](#table-of-contents)
 
 

@@ -145,12 +145,20 @@ try {
         data[0] = data[0] +' ![advanced](/advanced.svg)';
         data = data.join('\n');
       }
+      let privateAddIndex = data.lastIndexOf('^^^^ADD')
+      let privateAdd = ''
+      if(~privateAddIndex){
+          privateAdd = data.slice(privateAddIndex).replace('^^^^ADD', '解析：')
+          // console.log(privateAdd)
+          data = data.slice(0, privateAddIndex)
+      }
       data =
         data.slice(0, data.lastIndexOf('```js')) +
         '<details>\n<summary>Examples</summary>\n\n' +
         data.slice(data.lastIndexOf('```js'), data.lastIndexOf('```')) +
         data.slice(data.lastIndexOf('```')) +
-        '\n</details>\n';
+        '\n</details>\n' +
+        privateAdd;
       output += `\n${data + '\n<br>[⬆ Back to top](#table-of-contents)\n\n'}`;
     }
   }
