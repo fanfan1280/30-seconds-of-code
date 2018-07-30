@@ -12,3 +12,8 @@ const ary = (fn, n) => (...args) => fn(...args.slice(0, n));
 const firstTwoMax = ary(Math.max, 2);
 [[2, 6, 'a'], [8, 4, 6], [10]].map(x => firstTwoMax(...x)); // [6, 8, 10]
 ```
+
+^^^^ADD
+
+1. 利用解构运算符方便的获取到 `arguments`，和向函数传入参数
+2. 利用 `Array.prototype.slice` 截取固定位数的参数

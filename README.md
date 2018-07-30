@@ -505,8 +505,12 @@ const firstTwoMax = ary(Math.max, 2);
 [[2, 6, 'a'], [8, 4, 6], [10]].map(x => firstTwoMax(...x)); // [6, 8, 10]
 ```
 
-</details>
 
+</details>
+<br>**解析：**
+
+1. 利用解构运算符方便的获取到 `arguments`，和向函数传入参数
+2. 利用 `Array.prototype.slice` 截取固定位数的参数
 <br>[⬆ Back to top](#table-of-contents)
 
 
@@ -830,7 +834,7 @@ all([])  // true
 
 
 </details>
-解析：
+<br>**解析：**
 
 1. 利用 `Array.every()`
 2. 指定默认断言函数 `Boolean`
@@ -866,7 +870,7 @@ any([0, 0, 1, 0]); // true
 
 
 </details>
-解析：
+<br>**解析：**
 
 1. 利用 `Array.some()`
 2. 指定默认断言函数 `Boolean`
@@ -897,7 +901,7 @@ arrayToCSV([['a', 'b'], ['c', 'd']], ';'); // '"a";"b"\n"c";"d"'
 
 
 </details>
-解析：
+<br>**解析：**
 
 1. [CSV是什么？](https://zh.wikipedia.org/wiki/%E9%80%97%E5%8F%B7%E5%88%86%E9%9A%94%E5%80%BC)
   - 纯文本
@@ -928,8 +932,30 @@ const bifurcate = (arr, filter) =>
 bifurcate(['beep', 'boop', 'foo', 'bar'], [true, true, false, true]); // [ ['beep', 'boop', 'bar'], ['foo'] ]
 ```
 
-</details>
 
+</details>
+<br>**解析：**
+
+我们可以再一次感受到 `Array.prototype.reduce()` 的方便之处，从写法上自动隐式声明一个变量，每次遍历都操作该变量，并最终返回该变量的值。
+在写法上，这是一个优雅的提升。
+
+例如：
+
+```js
+const sum = arr => arr.reduce( (acc,val) => acc+=val, 0 )
+console.log(sum([1,2,3,4,5]))
+
+// 普通版
+const sum0 = arr => {
+  let result = 0
+  arr.forEach(val => result += val)
+  return result
+}
+console.log(sum0([1,2,3,4,5]))
+```
+
+这个函数，应用场景不够强有力。因为两个参数都是数组，并且没有强有力的对应关系。
+不过对于 `Array.prototype.reduce()` 的使用值得我们学习。
 <br>[⬆ Back to top](#table-of-contents)
 
 
@@ -951,7 +977,16 @@ const bifurcateBy = (arr, fn) =>
 bifurcateBy(['beep', 'boop', 'foo', 'bar'], x => x[0] === 'b'); // [ ['beep', 'boop', 'bar'], ['foo'] ]
 ```
 
+
 </details>
+<br>**解析：**
+
+这个函数相对于 `bifurcate`,适用性很高。第二个参数是一个判断函数，来定义元素的分组规则。
+
+1. 利用 `Array.prototype.reduce()` 设置初始值存储分组结果，并最终输出该结果。
+2. 将结果定义为长度为2的二维数组。第一个元素数组存储返回值为 `truthy` 的结果，第二个数组元素存储返回值为 `falsy` 的结果。
+3. 三目运算符运算结果指定 `push` 到哪个数组
+
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -3153,7 +3188,7 @@ arrayToHtmlList(['item 1', 'item 2'], 'myListID');
 
 
 </details>
-解析：
+<br>**解析：**
 
 1. `arrayToHtmlList()` 执行之后返回父元素最终的 `innerHTML`
 2. 利用[逗号运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Comma_Operator)对父元素 `el` 操作 `innerHTML` 并返回此 `innerHTML`，又因为逗号运算符只支持表达式，所以利用匿名函数变相声明 `el`
@@ -4353,9 +4388,21 @@ var elements = attempt(function(selector) {
   return document.querySelectorAll(selector);
 }, '>_>');
 if (elements instanceof Error) elements = []; // elements = []
+
+console.log(attempt())  // TypeError: fn is not a function
 ```
 
+
 </details>
+<br>**解析：**
+
+日常中我们可能使用比较多的就是 `func && func()` 这样的写法。
+但是 `attempt` 这个方法在内部帮我们 `try..catch` 了错误。
+
+1. 使用 `try..catch` 捕捉错误
+2. `catch` 中判断捕获的如果不是 `Error` 对象，就显式返回一个 `Error` 对象。
+  这里这样做，可能是为了防止 `throw 'this is a error message'` 这种骚操作而做了统一返回 `Error` 的处理。
+3. 请注意：该方法只能捕获同步错误
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -4386,7 +4433,13 @@ const freddyBound = bind(greet, freddy);
 console.log(freddyBound('hi', '!')); // 'hi fred!'
 ```
 
+
 </details>
+<br>**解析：**
+
+1. 利用 `Function.prototype.apply` 绑定 `this`
+2. 利用解构运算符处理传入的多个参数
+3. 利用柯里化接收并处理剩余的参数
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -4419,7 +4472,12 @@ const freddyBound = bindKey(freddy, 'greet');
 console.log(freddyBound('hi', '!')); // 'hi fred!'
 ```
 
+
 </details>
+<br>**解析：**
+
+1. 用解构运算符处理多个参数
+2. 利用柯里化，返回一个硬绑定函数，接收剩余的参数
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -5097,7 +5155,7 @@ approximatelyEqual(Math.PI / 2.0, 1.5708); // true
 
 
 </details>
-解析：
+<br>**解析：**
 
 1. 利用一个误差值判断约等
 2. `.1 + .2 = .3` 问题
@@ -5131,7 +5189,14 @@ average(...[1, 2, 3]); // 2
 average(1, 2, 3); // 2
 ```
 
+
 </details>
+<br>**解析：**
+
+1. 利用 `Array.prototype.reduce()` 累加传入参数，得到总和。
+2. 设计接收多个参数，而非接收一个数组的方式。
+  可以利用简洁的解构运算符传入数组，比 `average.apply(null, [1,2,3])` 的方式简便易读。
+
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -5156,7 +5221,16 @@ averageBy([{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }], o => o.n); // 5
 averageBy([{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }], 'n'); // 5
 ```
 
+
 </details>
+<br>**解析：**
+
+是 `average` 的升级版，第二个参数用来指定如何处理参数1这个数组，是一个函数或者数组元素的成员属性名。
+
+1. 第一步，利用 `Array.prototype.map()` 处理数组。
+  1. 如果是函数，就执行这个处理函数。
+  2. 否则，处理函数就变成返回成员属性名对应的值。
+2. 利用 `Array.prototype.reduce()` 计算出平均值。
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -6083,8 +6157,16 @@ const atob = str => new Buffer(str, 'base64').toString('binary');
 atob('Zm9vYmFy'); // 'foobar'
 ```
 
-</details>
 
+</details>
+<br>**解析：**
+
+1. 浏览器环境：
+  - 不存在 `Buffer` 方法
+  - `window` 对象有 `atob`、`btoa` 方法
+2. `node.js` 环境：
+  - 有 `Buffer` 对象
+  - `new Buffer()` 的写法已经被反对了，现在官方推荐 `Buffer.form()`
 <br>[⬆ Back to top](#table-of-contents)
 
 
@@ -6105,8 +6187,11 @@ const btoa = str => new Buffer(str, 'binary').toString('base64');
 btoa('foobar'); // 'Zm9vYmFy'
 ```
 
-</details>
 
+</details>
+<br>**解析：**
+
+同 [`atob`](#atob)。
 <br>[⬆ Back to top](#table-of-contents)
 
 
@@ -6380,7 +6465,15 @@ bindAll(view, 'click');
 jQuery(element).on('click', view.click); // Logs 'clicked docs' when clicked.
 ```
 
+
 </details>
+<br>**解析：**
+
+指定一个对象，和对象的一些函数名，将这些函数硬绑定到该对象上。
+
+1. 利用解构运算符，处理多个参数
+2. 利用逗号运算符隐式声明变量，获取 `obj[fn]` 的地址是为了避免死循环
+3. 最后将属性的硬绑定函数设置给对应属性
 
 <br>[⬆ Back to top](#table-of-contents)
 

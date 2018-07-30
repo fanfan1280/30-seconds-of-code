@@ -11,3 +11,7 @@ const btoa = str => new Buffer(str, 'binary').toString('base64');
 ```js
 btoa('foobar'); // 'Zm9vYmFy'
 ```
+
+^^^^ADD
+
+同 [`atob`](#atob)。

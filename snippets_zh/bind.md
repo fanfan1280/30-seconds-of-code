@@ -20,3 +20,9 @@ const freddy = { user: 'fred' };
 const freddyBound = bind(greet, freddy);
 console.log(freddyBound('hi', '!')); // 'hi fred!'
 ```
+
+^^^^ADD
+
+1. 利用 `Function.prototype.apply` 绑定 `this`
+2. 利用解构运算符处理传入的多个参数
+3. 利用柯里化接收并处理剩余的参数

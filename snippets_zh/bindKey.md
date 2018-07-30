@@ -22,3 +22,8 @@ const freddy = {
 const freddyBound = bindKey(freddy, 'greet');
 console.log(freddyBound('hi', '!')); // 'hi fred!'
 ```
+
+^^^^ADD
+
+1. 用解构运算符处理多个参数
+2. 利用柯里化，返回一个硬绑定函数，接收剩余的参数
