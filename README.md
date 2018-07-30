@@ -508,8 +508,9 @@ const firstTwoMax = ary(Math.max, 2);
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. 利用解构运算符方便的获取到 `arguments`，和向函数传入参数
 2. 利用 `Array.prototype.slice` 截取固定位数的参数
@@ -849,8 +850,9 @@ all([])  // true
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. 利用 `Array.every()`
 2. 指定默认断言函数 `Boolean`
@@ -888,8 +890,9 @@ any([0, 0, 1, 0]); // true
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. 利用 `Array.some()`
 2. 指定默认断言函数 `Boolean`
@@ -922,8 +925,9 @@ arrayToCSV([['a', 'b'], ['c', 'd']], ';'); // '"a";"b"\n"c";"d"'
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. [CSV是什么？](https://zh.wikipedia.org/wiki/%E9%80%97%E5%8F%B7%E5%88%86%E9%9A%94%E5%80%BC)
   - 纯文本
@@ -958,8 +962,9 @@ bifurcate(['beep', 'boop', 'foo', 'bar'], [true, true, false, true]); // [ ['bee
 
 </details>
 
-
+<br>
 **解析：**
+
 
 我们可以再一次感受到 `Array.prototype.reduce()` 的方便之处，从写法上自动隐式声明一个变量，每次遍历都操作该变量，并最终返回该变量的值。
 在写法上，这是一个优雅的提升。
@@ -1006,8 +1011,9 @@ bifurcateBy(['beep', 'boop', 'foo', 'bar'], x => x[0] === 'b'); // [ ['beep', 'b
 
 </details>
 
-
+<br>
 **解析：**
+
 
 这个函数相对于 `bifurcate`,适用性很高。第二个参数是一个判断函数，来定义元素的分组规则。
 
@@ -3299,8 +3305,9 @@ arrayToHtmlList(['item 1', 'item 2'], 'myListID');
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. `arrayToHtmlList()` 执行之后返回父元素最终的 `innerHTML`
 2. 利用[逗号运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Comma_Operator)对父元素 `el` 操作 `innerHTML` 并返回此 `innerHTML`，又因为逗号运算符只支持表达式，所以利用匿名函数变相声明 `el`
@@ -4547,8 +4554,9 @@ console.log(attempt())  // TypeError: fn is not a function
 
 </details>
 
-
+<br>
 **解析：**
+
 
 日常中我们可能使用比较多的就是 `func && func()` 这样的写法。
 但是 `attempt` 这个方法在内部帮我们 `try..catch` 了错误。
@@ -4591,8 +4599,9 @@ console.log(freddyBound('hi', '!')); // 'hi fred!'
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. 利用 `Function.prototype.apply` 绑定 `this`
 2. 利用解构运算符处理传入的多个参数
@@ -4633,8 +4642,9 @@ console.log(freddyBound('hi', '!')); // 'hi fred!'
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. 用解构运算符处理多个参数
 2. 利用柯里化，返回一个硬绑定函数，接收剩余的参数
@@ -5339,8 +5349,9 @@ approximatelyEqual(Math.PI / 2.0, 1.5708); // true
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. 利用一个误差值判断约等
 2. `.1 + .2 = .3` 问题
@@ -5378,8 +5389,9 @@ average(1, 2, 3); // 2
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. 利用 `Array.prototype.reduce()` 累加传入参数，得到总和。
 2. 设计接收多个参数，而非接收一个数组的方式。
@@ -5413,8 +5425,9 @@ averageBy([{ n: 4 }, { n: 2 }, { n: 8 }, { n: 6 }], 'n'); // 5
 
 </details>
 
-
+<br>
 **解析：**
+
 
 是 `average` 的升级版，第二个参数用来指定如何处理参数1这个数组，是一个函数或者数组元素的成员属性名。
 
@@ -6386,8 +6399,9 @@ atob('Zm9vYmFy'); // 'foobar'
 
 </details>
 
-
+<br>
 **解析：**
+
 
 1. 浏览器环境：
   - 不存在 `Buffer` 方法
@@ -6419,8 +6433,9 @@ btoa('foobar'); // 'Zm9vYmFy'
 
 </details>
 
-
+<br>
 **解析：**
+
 
 同 [`atob`](#atob)。
 
@@ -6708,8 +6723,9 @@ jQuery(element).on('click', view.click); // Logs 'clicked docs' when clicked.
 
 </details>
 
-
+<br>
 **解析：**
+
 
 指定一个对象，和对象的一些函数名，将这些函数硬绑定到该对象上。
 

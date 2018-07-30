@@ -148,7 +148,7 @@ try {
       let privateAddIndex = data.lastIndexOf('^^^^ADD')
       let privateAdd = ''
       if(~privateAddIndex){
-          privateAdd = data.slice(privateAddIndex).replace('^^^^ADD', '\n\n**解析：**')
+          privateAdd = data.slice(privateAddIndex).replace('^^^^ADD', '\n<br>\n**解析：**\n')
           // console.log(privateAdd)
           data = data.slice(0, privateAddIndex)
       }
