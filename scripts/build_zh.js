@@ -148,7 +148,7 @@ try {
       let privateAddIndex = data.lastIndexOf('^^^^ADD')
       let privateAdd = ''
       if(~privateAddIndex){
-          privateAdd = data.slice(privateAddIndex).replace('^^^^ADD', '\n<br>\n**解析：**')
+          privateAdd = data.slice(privateAddIndex).replace('^^^^ADD', '\n\n**解析：**')
           // console.log(privateAdd)
           data = data.slice(0, privateAddIndex)
       }
@@ -159,7 +159,7 @@ try {
         data.slice(data.lastIndexOf('```')) +
         '\n</details>\n' +
         privateAdd;
-      output += `\n${data + '\n\n<br>\n[⬆ Back to top](#table-of-contents)\n\n'}`;
+      output += `\n${data + '\n\n<br>[⬆ Back to top](#table-of-contents)\n\n'}`;
     }
   }
 
