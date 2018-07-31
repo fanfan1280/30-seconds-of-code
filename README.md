@@ -541,7 +541,15 @@ Promise.resolve([1, 2, 3])
   .then(console.log); //[ 2, 4, 6 ]
 ```
 
+
 </details>
+
+
+<br>**解析：**
+
+
+1. 利用柯里化接收属性方法名和其接收的参数
+2. 柯里化返回的函数用来接收上下文对象。
 
 
 <br>[⬆ Back to top](#table-of-contents)
@@ -3356,7 +3364,24 @@ const bottomVisible = () =>
 bottomVisible(); // true
 ```
 
+
 </details>
+
+
+<br>**解析：**
+
+
+判断显示区域是否包含页面最底部区域。
+
+判断依据：文档垂直滚出的长度 + 文档在视窗里的高度 >= 文档的可滚动长度
+
+**私改：**
+
+```js
+const bottomVisible = () =>
+  document.documentElement.clientHeight + window.scrollY >=
+  (document.documentElement.scrollHeight || document.documentElement.offsetHeight || document.documentElement.clientHeight);
+```
 
 
 <br>[⬆ Back to top](#table-of-contents)
@@ -5470,8 +5495,17 @@ const binomialCoefficient = (n, k) => {
 binomialCoefficient(8, 2); // 28
 ```
 
+
 </details>
 
+
+<br>**解析：**
+
+
+[二项式系数](https://baike.baidu.com/item/%E4%BA%8C%E9%A1%B9%E5%BC%8F%E7%B3%BB%E6%95%B0/6763242?fr=aladdin) 从组合数学上来讲的意义是：从 `n` 件物品中，不分先后选取 `k` 件方法的总数。
+
+1. 在前面判断很多的临界条件
+2. 用 `ES6` 的 `Number.isNaN()` 判断是否为 `NaN`，而非 `window.isNaN` 或者 `NaN !== NaN`
 
 <br>[⬆ Back to top](#table-of-contents)
 
@@ -6438,6 +6472,7 @@ btoa('foobar'); // 'Zm9vYmFy'
 
 
 同 [`atob`](#atob)。
+
 
 <br>[⬆ Back to top](#table-of-contents)
 

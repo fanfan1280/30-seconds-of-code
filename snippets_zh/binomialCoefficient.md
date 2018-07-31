@@ -24,3 +24,10 @@ const binomialCoefficient = (n, k) => {
 ```js
 binomialCoefficient(8, 2); // 28
 ```
+
+^^^^ADD
+
+[二项式系数](https://baike.baidu.com/item/%E4%BA%8C%E9%A1%B9%E5%BC%8F%E7%B3%BB%E6%95%B0/6763242?fr=aladdin) 从组合数学上来讲的意义是：从 `n` 件物品中，不分先后选取 `k` 件方法的总数。
+
+1. 在前面判断很多的临界条件
+2. 用 `ES6` 的 `Number.isNaN()` 判断是否为 `NaN`，而非 `window.isNaN` 或者 `NaN !== NaN`
